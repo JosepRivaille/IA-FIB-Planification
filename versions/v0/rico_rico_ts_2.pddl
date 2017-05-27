@@ -6,7 +6,9 @@
   )
   (:init
     (incompatible Spaghetti_Bolognese Roast_pork_with_prunes)
+    (incompatible Mediterranean_Salad Roast_pork_with_prunes)
     (incompatible Spaghetti_Bolognese Spanish_omelette)
+    (incompatible Mediterranean_Salad Spanish_omelette)
   )
   (:goal
     (forall (?d - day)
