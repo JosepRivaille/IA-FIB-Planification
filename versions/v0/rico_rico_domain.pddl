@@ -1,6 +1,6 @@
 (define (domain ricoRico)
-  (:requirements :strips :typing :adl :equality)
-  (:types 
+  (:requirements :strips :typing :adl)
+  (:types
     day - object
     dish - object
     mainCourse - dish secondCourse - dish
@@ -8,13 +8,13 @@
 
   (:predicates
     (incompatible ?mc - mainCourse ?sc - secondCourse)
-    (assigned ?day - day ?mc - mainCourse ?sc - secondCourse)
+    (assigned ?d - day ?mc - mainCourse ?sc - secondCourse)
     (dayReady ?d - day)
   )
 
-  (:action assign
-    :parameters (?day - day ?mc - mainCourse ?sc - secondCourse)
-    :precondition (and (not (dayReady ?day)) (not (incompatible ?mc ?sc))) 
-    :effect (and (dayReady ?day) (assigned ?day ?mc ?sc))
+  (:action assignMenus
+    :parameters (?d - day ?mc - mainCourse ?sc - secondCourse)
+    :precondition (and (not (dayReady ?d)) (not (incompatible ?mc ?sc)))
+    :effect (and (dayReady ?d) (assigned ?d ?mc ?sc))
   )
 )
