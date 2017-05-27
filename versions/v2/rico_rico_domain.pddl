@@ -19,11 +19,8 @@
   (:action assign
     :parameters (
       ?day - day ?mc - mainCourse ?sc - secondCourse
-      ?dayB - day ?mcB - mainCourse ?scB - secondCourse
-      ?catMB - category ?catSB - category
-      ?catMC - category ?catSC - category
     )
-    :precondition (and (not (incompatible ?mc ?sc)) (not (dayReady ?day)) (not (used ?mc)) (not (used ?sc)) (dayBefore ?day ?dayb) (not(assigned ?dayb ?mc ?sc)))
+    :precondition (and (not (incompatible ?mc ?sc)) (not (dayReady ?day)) (not (used ?mc)) (not (used ?sc)) (dayBefore ?day ?dayB) (assigned ?dayB ?mcB ?scB) (classified ?mcB catMB)(classified ?scB catSB)(not(classified ?mc catMB)) (not(classified ?sc ?catSB)))
     :effect (and (dayReady ?day) (assigned ?day ?mc ?sc) (used ?mc) (used ?sc))
   )
 )
