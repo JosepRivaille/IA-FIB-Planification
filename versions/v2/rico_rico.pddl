@@ -34,6 +34,9 @@
   (dayBefore Thu Fri)
   (dayBefore Fri Sat)
   (dayBefore Sat Sun)
+
+  (init)
+
 )
 (:goal
   (forall (?d - day)

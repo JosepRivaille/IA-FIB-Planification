@@ -14,7 +14,7 @@
 
   (:action assignMenus
     :parameters (?d - day ?mc - mainCourse ?sc - secondCourse)
-    :precondition (and (not (dayReady ?d)) (not (incompatible ?mc ?sc)))
+    :precondition (not (incompatible ?mc ?sc))
     :effect (and (dayReady ?d) (assigned ?d ?mc ?sc))
   )
 )
