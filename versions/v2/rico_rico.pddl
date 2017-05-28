@@ -1,6 +1,6 @@
 (define (problem ricoRico) (:domain ricoRico)
 (:objects
-  Mon Tue Wed Thu Fri Sat Sun - day
+  Mon Tue Wed Thu Fri - day
   Spaghetti_Bolognese Mediterranean_Salad Vegan_Sandwich Mushroom_risotto Guacamole_with_tomatoes Sushi American_burger - mainCourse
   Roast_pork_with_prunes Spanish_omelette Paella Tuna_steak Chicken_parmesan Lamb_tagine Couscous_meatloaf - secondCourse
   Fish Meat Soup Salad Rice Pasta Vegetables - category
@@ -27,15 +27,13 @@
   (classified Lamb_tagine Meat)
   (classified Couscous_meatloaf Meat)
   
-  (dayBefore Sun Mon)
   (dayBefore Mon Tue)
   (dayBefore Tue Wed)
   (dayBefore Wed Thu)
   (dayBefore Thu Fri)
-  (dayBefore Fri Sat)
-  (dayBefore Sat Sun)
+  
 
-  (init)
+  
 
 )
 (:goal
