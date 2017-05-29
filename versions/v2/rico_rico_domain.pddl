@@ -16,7 +16,7 @@
     (dayBefore ?cd - day ?db - day)
   )
 
-  (:action assign
+  (:action assignMenus
     :parameters (
       ?d - day ?mc - mainCourse ?sc - secondCourse
       ?db - day ?mcB - mainCourse ?scB - secondCourse
