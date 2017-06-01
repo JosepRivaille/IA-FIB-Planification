@@ -13,7 +13,7 @@
   )
   (:goal
     (forall (?d - day)
-      (dayReady ?d)
+      (and (mainReady ?d) (secondReady ?d))
     )
   )
 )
