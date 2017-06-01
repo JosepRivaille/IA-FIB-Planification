@@ -9,28 +9,44 @@
 
   (:predicates
     (incompatible ?mc - mainCourse ?sc - secondCourse)
-    (assigned ?day - day ?mc - mainCourse ?sc - secondCourse)
-    (dayReady ?d - day)
+    (assignedMC ?d - day ?mc - mainCourse)
+    (mainReady ?d - day)
+    (secondReady ?d - day)
     (used ?d - dish)
     (classified ?d - dish ?c - category)
-    (dayBefore ?cd - day ?db - day)
+    (daySCClassif ?d - day ?c - category)
+    (dayMCClassif ?d - day ?c - category)
+    (dayBefore ?db - day ?d - day)
   )
 
-  (:action assignMenus
+  (:action assignMC
+
     :parameters (
-      ?d - day ?mc - mainCourse ?sc - secondCourse
-      ?db - day ?mcB - mainCourse ?scB - secondCourse
-      ?catSB - category ?catMB - category
+      ?d - day
+      ?mc - mainCourse
+    )    
+    :precondition (and
+      (not (mainReady ?d)) (not (used ?mc)) 
+      (exists (?db - day ?c2 - category) (and (dayBefore ?db ?d) (secondReady ?db) (dayMCClassif ?db ?c2) (not (classified ?mc ?c2))))
     )
-    :precondition (or
-      (and (= ?d Mon) (not (incompatible ?mc ?sc)))
-      (and
-        (not (= ?d Mon)) (dayBefore ?db ?d) (not (dayReady ?d))
-        (not (incompatible ?mc ?sc)) (not (used ?mc)) (not (used ?sc))
-        (assigned ?db ?mcB ?scB) (classified ?mcB ?catMB) (classified ?scB ?catSB)
-        (not (classified ?mc ?catMB)) (not (classified ?sc ?catSB))
-      )
+    :effect (and
+      (used ?mc) (mainReady ?d) (assignedMC ?d ?mc) (forall (?c - category) (when (classified ?mc ?c) (dayMCClassif ?d ?c)))
     )
-    :effect (and (dayReady ?d) (assigned ?d ?mc ?sc) (used ?mc) (used ?sc))
   )
+  
+  (:action assignSC
+    :parameters (
+      ?d - day 
+      ?mc - mainCourse 
+      ?sc - secondCourse
+    )
+    :precondition (and 
+      (assignedMC ?d ?mc) (not (secondReady ?d)) (not (used ?sc)) (not (incompatible ?mc ?sc)) 
+      (exists (?db - day ?c2 - category) (and (dayBefore ?db ?d) (secondReady ?db) (daySCClassif ?db ?c2) (not (classified ?sc ?c2))))
+    )
+    :effect (and 
+      (used ?sc) (secondReady ?d) (forall (?c - category) (when (classified ?sc ?c) (daySCClassif ?d ?c)))
+    )
+  )
+
 )
