@@ -38,16 +38,27 @@
     (dayMCClassif DummyD DummyC)
     (daySCClassif DummyD DummyC)
 
-
     (servedOnly Paella Thu)
     (servedOnly Spanish_omelette Mon)
     (servedOnly Lamb_tagine Wed)
     (servedOnly Sushi Fri)
 
-
     (= (minCalories) 1000)
     (= (maxCalories) 1500)
-    (= (calories Roast_pork_with_prunes) 2000)
+    
+    (= (calories Mediterranean_Salad) 100)
+    (= (calories Vegan_Sandwich) 300)
+    (= (calories Mushroom_risotto) 500)
+    (= (calories Guacamole_with_tomatoes) 600)
+    (= (calories Sushi) 700)
+    (= (calories American_burger) 1000)
+    (= (calories Roast_pork_with_prunes) 800)
+    (= (calories Spanish_omelette) 400)
+    (= (calories Paella) 700)
+    (= (calories Tuna_steak) 600)
+    (= (calories Chicken_parmesan) 500)
+    (= (calories Lamb_tagine) 500)
+    (= (calories Couscous_meatloaf) 200)
 
   )
   (:goal
