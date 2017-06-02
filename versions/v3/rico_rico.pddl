@@ -29,6 +29,7 @@
     (classified Chinese_Noodles_With_Vegetables Soup)
     (classified Chana_masala Soup)
     (classified Chinese_tiger_salad Fish)
+    (classified Shumai rice)
     ; Second courses
     (classified Roast_pork_with_prunes Meat)
     (classified Spanish_omelette Meat)
