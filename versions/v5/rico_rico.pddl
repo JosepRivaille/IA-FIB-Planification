@@ -59,10 +59,28 @@
     (= (calories Chicken_parmesan) 500)
     (= (calories Lamb_tagine) 500)
     (= (calories Couscous_meatloaf) 200)
+
+    (= (totalPrice) 0)
+
+    (= (price Mediterranean_Salad) 7)
+    (= (price Vegan_Sandwich) 5)
+    (= (price Mushroom_risotto) 12)
+    (= (price Guacamole_with_tomatoes) 10)
+    (= (price Sushi) 15)
+    (= (price American_burger) 5)
+    (= (price Roast_pork_with_prunes) 17)
+    (= (price Spanish_omelette) 4)
+    (= (price Paella) 25)
+    (= (price Tuna_steak) 20)
+    (= (price Chicken_parmesan) 14)
+    (= (price Lamb_tagine) 19)
+    (= (price Couscous_meatloaf) 9)
   )
   (:goal
     (forall (?d - day)
       (and (mainReady ?d) (secondReady ?d))
     )
   )
+
+  (:metric minimize (totalPrice))
 )
