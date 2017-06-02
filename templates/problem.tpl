@@ -5,7 +5,5 @@
   (:init
 {init}
   )
-  (:goal
-{goal}
-  )
+  {goal}
 )

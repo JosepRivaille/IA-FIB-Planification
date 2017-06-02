@@ -3,70 +3,56 @@ import os
 import random
 
 
-def generate_predicate(genpred):
-    arguments = genpred['args']
-    predicate = '(' + genpred['name']
-    for arg in range(arguments):
-        predicate += ' ' + random.choice(genpred['types'][arg]['values'])
-    return predicate + ')'
+def generate_test(version):
+    def generate_predicate(genpred):
+        arguments = genpred['args']
+        predicate = '(' + genpred['name']
+        for arg in range(arguments):
+            predicate += ' ' + random.choice(genpred['types'][arg]['values'])
+        return predicate + ')'
 
+    def generate_day_before(days):
+        day_before = ''
+        for i in range(len(days) - 1):
+            day_before += 4 * ' ' + '(dayBefore ' + days[i] + ' ' + days[i + 1] + ')\n'
+        day_before += '\n' + 4 * ' ' + '(mainReady DummyD)'
+        day_before += '\n' + 4 * ' ' + '(secondReady DummyD)'
+        day_before += '\n' + 4 * ' ' + '(dayMCClassif DummyD DummyC)'
+        return day_before + '\n' + 4 * ' ' + '(daySCClassif DummyD DummyC)\n\n'
 
-def generate_day_before(days):
-    day_before = ''
-    for i in range(len(days) - 1):
-        day_before += 4 * ' ' + '(dayBefore ' + days[i] + ' ' + days[i + 1] + ')\n'
-    day_before += '\n' + 4 * ' ' + '(mainReady DummyD)'
-    day_before += '\n' + 4 * ' ' + '(secondReady DummyD)'
-    day_before += '\n' + 4 * ' ' + '(dayMCClassif DummyD DummyC)'
-    return day_before + '\n' + 4 * ' ' + '(daySCClassif DummyD DummyC)\n\n'
+    def generate_classifications(main_courses, second_courses, categories):
+        categories_mc = [5, 3, 6, 4, 6, 0, 1, 6, 2, 2, 2, 0, 4]
+        categories_sc = [1, 1, 4, 0, 1, 1, 6, 1, 6, 5, 5, 0]
 
+        categorization = ''
+        for index, course in enumerate(main_courses):
+            categorization += 4 * ' ' + '(classified ' + course + ' ' + categories[categories_mc[index]] + ')\n'
+        for index, course in enumerate(second_courses):
+            categorization += 4 * ' ' + '(classified ' + course + ' ' + categories[categories_sc[index]] + ')\n'
+        return categorization + '\n'
 
-def generate_classifications(main_courses, second_courses, categories):
-    categories_mc = [5, 3, 6, 4, 6, 0, 1, 6, 2, 2, 2, 0, 4]
-    categories_sc = [1, 1, 4, 0, 1, 1, 6, 1, 6, 5, 5, 0]
+    def generate_calories(main_courses, second_courses):
+        calories_main = [500, 120, 290, 490, 610, 720, 1000, 240, 600, 760, 480, 320, 410]
+        calories_second = [810, 380, 700, 670, 520, 490, 250, 960, 320, 480, 430, 750]
 
-    categorization = ''
-    for index, course in enumerate(main_courses):
-        categorization += 4 * ' ' + '(classified ' + course + ' ' + categories[categories_mc[index]] + ')\n'
-    for index, course in enumerate(second_courses):
-        categorization += 4 * ' ' + '(classified ' + course + ' ' + categories[categories_sc[index]] + ')\n'
-    return categorization + '\n'
+        calories = ''
+        for index, course in enumerate(main_courses):
+            calories += 4 * ' ' + '(= (calories ' + course + ') ' + str(calories_main[index]) + ')\n'
+        for index, course in enumerate(second_courses):
+            calories += 4 * ' ' + '(= (calories ' + course + ') ' + str(calories_second[index]) + ')\n'
+        return calories + '\n'
 
+    def generate_prices(main_courses, second_courses):
+        prices_main = [8, 7, 5, 12, 10, 15, 5, 10, 16, 9, 11, 6, 13]
+        prices_second = [17, 4, 25, 20, 14, 19, 9, 21, 12, 6, 6, 13]
 
-def generate_calories(main_courses, second_courses):
-    calories_main = [500, 120, 290, 490, 610, 720, 1000, 240, 600, 760, 480, 320, 410]
-    calories_second = [810, 380, 700, 670, 520, 490, 250, 960, 320, 480, 430, 750]
+        prices = ''
+        for index, course in enumerate(main_courses):
+            prices += 4 * ' ' + '(= (price ' + course + ') ' + str(prices_main[index]) + ')\n'
+        for index, course in enumerate(second_courses):
+            prices += 4 * ' ' + '(= (price ' + course + ') ' + str(prices_second[index]) + ')\n'
+        return prices + '\n'
 
-    calories = ''
-    for index, course in enumerate(main_courses):
-        calories += 4 * ' ' + '(= (calories ' + course + ') ' + str(calories_main[index]) + ')\n'
-    for index, course in enumerate(second_courses):
-        calories += 4 * ' ' + '(= (calories ' + course + ') ' + str(calories_main[index]) + ')\n'
-    return calories + '\n'
-
-
-def generate_prices(main_courses, second_courses):
-    prices_main = [8, 7, 5, 12, 10, 15, 5, 10, 16, 9, 11, 6, 13]
-    prices_second = [17, 4, 25, 20, 14, 19, 9, 21, 12, 6, 6, 13]
-
-    prices = ''
-    for index, course in enumerate(main_courses):
-        prices += 4 * ' ' + '(= (price ' + course + ') ' + str(prices_main[index]) + ')\n'
-    for index, course in enumerate(second_courses):
-        prices += 4 * ' ' + '(= (price ' + course + ') ' + str(prices_second[index]) + ')\n'
-    return prices + '\n'
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Executes PDDL RicoRico versions')
-    parser.add_argument('version', metavar='version', type=int, help='Version number')
-    parser.add_argument('tests', metavar='tests', type=int, help='Number of tests')
-
-    args = parser.parse_args()
-    version = args.version
-    n_tests = args.tests
-
-    file_tpl = os.path.join('templates', 'problem.tpl')
     data = {
         'objects': [],
         'init': [],
@@ -105,6 +91,9 @@ if __name__ == '__main__':
     # Init
     data['init'].append({'name': 'incompatible', 'random': True, 'args': 2, 'types': [main_course, second_course]})
 
+    # Create goal
+    goal = '(:goal\n' + 4 * ' ' + '(forall (?d - day)\n' + 6 * ' ' + '(dayReady ?d)\n' + 4 * ' ' + ')\n' + 2 * ' ' + ')'
+
     if version >= 2:
         category = {
             'values': ['Fish', 'Meat', 'Soup', 'Salad', 'Rice', 'Pasta', 'Vegetables', 'DummyC'],
@@ -129,6 +118,7 @@ if __name__ == '__main__':
         data['init'].append({'name': 'prices', 'random': False, 'values': generate_prices(
             main_course['values'], second_course['values']
         )})
+        goal += '\n' + 2 * ' ' + '(:metric minimize (totalPrice))'
 
     # Create objects
     objects = ''
@@ -147,11 +137,42 @@ if __name__ == '__main__':
             init += pred['values']
     init = init[:-2]
 
-    # Create goal
-    goal = 4 * ' ' + '(forall (?d - day)\n' + 6 * ' ' + '(dayReady ?d)\n' + 4 * ' ' + ')'
+    file_tpl = os.path.join('templates', 'problem.tpl')
+    with open(file_tpl, 'r') as f:
+        template = f.read()
+        template = template.format(problem='ricoRico', domain='ricoRico', objects=objects, init=init, goal=goal)
+        return template
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Executes PDDL RicoRico versions')
+    parser.add_argument('version', metavar='version', type=int, help='Version number')
+    parser.add_argument('tests', metavar='tests', type=int, help='Number of tests')
+
+    args = parser.parse_args()
+    v_test = args.version
+    n_tests = args.tests
+
+    test_path = os.path.join('versions', 'v' + str(v_test))
+    test_files = [f for f in os.listdir(test_path) if os.path.isfile(os.path.join(test_path, f)) and '_ts_' in f]
+    min_test = 0
+    if len(test_files) is not 0:
+        answer_ok = False
+        while not answer_ok:
+            delete_files = input("Detected some existing test suites, do you want to remove it? If not those will be added as new ones [Y/N]: ")
+            if delete_files.lower() in ['y', 'yes', 'ok', 'accept']:
+                for f in test_files:
+                    os.remove(os.path.join(test_path, f))
+                answer_ok = True
+            elif delete_files.lower() in ['n', 'no', 'deny', 'cancel']:
+                min_test = len(test_files)
+                answer_ok = True
+            else:
+                print('Sorry but I can\'t understand your answer')
+
 
     for n in range(n_tests):
-        with open(file_tpl, 'r') as f:
-            template = f.read()
-            template = template.format(problem='ricoRico', domain='ricoRico', objects=objects, init=init, goal=goal)
-            print(template)
+        test = generate_test(v_test)
+        test_file = os.path.join('versions', 'v' + str(v_test), 'rico_rico_ts_' + str(min_test + n) + '.pddl')
+        with open(test_file, "w") as wf:
+            wf.write(test)

@@ -127,6 +127,5 @@
       (and (mainReady ?d) (secondReady ?d))
     )
   )
-
   (:metric minimize (totalPrice))
 )
