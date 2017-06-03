@@ -77,7 +77,7 @@
     (= (calories Chinese_Noodles_With_Vegetables) 760)
     (= (calories Chana_masala) 480)
     (= (calories Chinese_tiger_salad) 320)
-    (= (classified Shumai) 410)
+    (= (calories Shumai) 410)
     ; Second Courses
     (= (calories Roast_pork_with_prunes) 810)
     (= (calories Spanish_omelette) 380)

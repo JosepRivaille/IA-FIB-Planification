@@ -64,19 +64,6 @@
     (= (minCalories) 1000)
     (= (maxCalories) 1500)
 
-    (classified Spaghetti_Bolognese Pasta)
-    (classified Mediterranean_Salad Salad)
-    (classified Vegan_Sandwich Vegetables)
-    (classified Mushroom_risotto Rice)
-    (classified Guacamole_with_tomatoes Vegetables)
-    (classified Sushi Fish)
-    (classified American_burger Meat)
-    (classified Broccoli_quiche Vegetables)
-    (classified Kirmizi_Mercimek_Corbasi Soup)
-    (classified Chinese_Noodles_With_Vegetables Soup)
-    (classified Chana_masala Soup)
-    (classified Chinese_tiger_salad Fish)
-    (classified Shumai rice)
 
     ; Main courses
     (= (calories Spaghetti_Bolognese) 500)
@@ -91,7 +78,7 @@
     (= (calories Chinese_Noodles_With_Vegetables) 760)
     (= (calories Chana_masala) 480)
     (= (calories Chinese_tiger_salad) 320)
-    (= (classified Shumai) 410)
+    (= (calories Shumai) 410)
     ; Second Courses
     (= (calories Roast_pork_with_prunes) 810)
     (= (calories Spanish_omelette) 380)
