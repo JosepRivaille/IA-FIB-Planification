@@ -61,7 +61,7 @@ def generate_test(version):
 
     # Objects
     day = {
-        'values': ['DummyD', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        'values': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
         'type': 'day'
     }
     data['objects'].append(day)
@@ -94,6 +94,9 @@ def generate_test(version):
     # Create goal
     goal = '(:goal\n' + 4 * ' ' + '(forall (?d - day)\n' + 6 * ' ' + '(dayReady ?d)\n' + 4 * ' ' + ')\n' + 2 * ' ' + ')'
 
+    if version >= 1:
+        goal = '(:goal\n' + 4 * ' ' + '(forall (?d - day)\n' + 6 * ' ' + '(and (mainReady ?d) (secondReady ?d))\n' + 4 * ' ' + ')\n' + 2 * ' ' + ')'
+
     if version >= 2:
         category = {
             'values': ['Fish', 'Meat', 'Soup', 'Salad', 'Rice', 'Pasta', 'Vegetables', 'DummyC'],
@@ -101,7 +104,9 @@ def generate_test(version):
         }
         data['objects'].append(category)
 
+        day['values'].insert(0, 'DummyD')
         data['init'].append({'name': 'classified', 'random': False, 'values': generate_day_before(day['values'])})
+
         data['init'].append({'name': 'dayBefore', 'random': False, 'values': generate_classifications(
             main_course['values'], second_course['values'], category['values']
         )})
