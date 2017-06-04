@@ -31,11 +31,11 @@ def generate_test(version):
             categorization += 4 * ' ' + '(classified ' + course + ' ' + categories[categories_sc[index]] + ')\n'
         return categorization + '\n'
 
-    def generate_calories(main_courses, second_courses):
+    def generate_calories(main_courses, second_courses, min_calories, max_calories):
         calories_main = [500, 120, 290, 490, 610, 720, 1000, 240, 600, 760, 480, 320, 410]
         calories_second = [810, 380, 700, 670, 520, 490, 250, 960, 320, 480, 430, 750]
 
-        calories = ''
+        calories = 4 * ' ' + '(= (minCalories) ' + str(min_calories) + ')\n' + 4 * ' ' + '(= (maxCalories) ' + str(max_calories) + ')\n\n'
         for index, course in enumerate(main_courses):
             calories += 4 * ' ' + '(= (calories ' + course + ') ' + str(calories_main[index]) + ')\n'
         for index, course in enumerate(second_courses):
@@ -46,7 +46,7 @@ def generate_test(version):
         prices_main = [8, 7, 5, 12, 10, 15, 5, 10, 16, 9, 11, 6, 13]
         prices_second = [17, 4, 25, 20, 14, 19, 9, 21, 12, 6, 6, 13]
 
-        prices = ''
+        prices = 4 * ' ' + '(= (totalPrice) 0)\n\n'
         for index, course in enumerate(main_courses):
             prices += 4 * ' ' + '(= (price ' + course + ') ' + str(prices_main[index]) + ')\n'
         for index, course in enumerate(second_courses):
@@ -116,7 +116,7 @@ def generate_test(version):
 
     if version >= 4:
         data['init'].append({'name': 'calories', 'random': False, 'values': generate_calories(
-            main_course['values'], second_course['values']
+            main_course['values'], second_course['values'], 1000, 1500
         )})
 
     if version >= 5:
@@ -135,7 +135,10 @@ def generate_test(version):
     init = ''
     for pred in data['init']:
         if pred['random']:
-            for _ in range(random.randint(1, 5)):
+            max_range = 5
+            if pred['random'] is 'incompatible':
+                max_range = 10
+            for _ in range(random.randint(1, max_range)):
                 init += 4 * ' ' + generate_predicate(pred) + '\n'
             init += '\n'
         else:
