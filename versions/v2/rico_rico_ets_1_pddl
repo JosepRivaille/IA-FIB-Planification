@@ -1,0 +1,49 @@
+(define (problem ricoRico) (:domain ricoRico)
+  (:objects
+    Mon Tue Wed Thu Fri DummyD - day
+    Spaghetti_Bolognese Mediterranean_Salad Vegan_Sandwich Mushroom_risotto Broccoli_quiche Chinese_Noodles_With_Vegetables - mainCourse
+    Roast_pork_with_prunes Paella Tuna_steak Coq_au_vin Persian_pie Spicy_seafood_stew Burrito_pie - secondCourse
+    Fish Meat Soup Salad Rice Pasta Vegetables DummyC - category
+  )
+  (:init
+    (incompatible Spaghetti_Bolognese Paella)
+    (incompatible Mushroom_risotto Coq_au_vin)
+    (incompatible Vegan_Sandwich Roast_pork_with_prunes)
+    (incompatible Chinese_Noodles_With_Vegetables Spicy_seafood_stew)
+    (incompatible Broccoli_quiche Burrito_pie)
+
+    ; Main courses
+    (classified Spaghetti_Bolognese Pasta)
+    (classified Mediterranean_Salad Salad)
+    (classified Vegan_Sandwich Vegetables)
+    (classified Mushroom_risotto Rice)
+    (classified Broccoli_quiche Vegetables)
+    (classified Chinese_Noodles_With_Vegetables Soup)
+    (classified Burrito_pie Pasta)
+   
+    ; Second courses
+    (classified Roast_pork_with_prunes Meat)
+    (classified Paella Rice)
+    (classified Tuna_steak Fish)
+    (classified Coq_au_vin Meat)
+    (classified Persian_pie Pasta)
+    (classified Spicy_seafood_stew Fish)
+
+    (dayBefore DummyD Mon)
+    (dayBefore Mon Tue)
+    (dayBefore Tue Wed)
+    (dayBefore Wed Thu)
+    (dayBefore Thu Fri)
+
+    ; Dummy initializations
+    (mainReady DummyD)
+    (secondReady DummyD)
+    (dayMCClassif DummyD DummyC)
+    (daySCClassif DummyD DummyC)
+  )
+  (:goal
+    (forall (?d - day)
+      (and (mainReady ?d) (secondReady ?d))
+    )
+  )
+)
